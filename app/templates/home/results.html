@@ -5,52 +5,46 @@
 {% block title %}Rezultati{% endblock %}
 {% block body %}
 <div class="content-section">
-  <div class="outer">
-    <div class="middle">
-      <div class="inner">
+    <div class="inner">
+      <h1 style="text-align:center;">Rezultati pretrage</h1>
+      {% if words %}
+      <hr class="intro-divider">
+      <div class="center">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th width="20%"> Riječ </th>
+              <th width="20%"> Konkretnost </th>
+              <th width="20%"> Predočivost </th>
+              <th width="20%"> Dob usvajanja </th>
+              <th width="20%"> Subjektivna frekvencija </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for word in words %}
+            <tr>
+              <td> {{ word.rijec }} </td>
+              <td> {{ word.konkretnost_m }} </td>
+              <td> {{ word.predocivost_m }} </td>
+              <td> {{ word.dob_usvajanja_m }} </td>
+              <td> {{ word.subj_frekvencija_m }} </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div style="text-align: center">
+        {% else %}
         <br/>
         {{ utils.flashed_messages() }}
         <br/>
-        <h1 style="text-align:center;">Rezultati pretrage</h1>
-        {% if words %}
-          <hr class="intro-divider">
-          <div class="center">
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <th width="20%"> Riječ </th>
-                  <th width="20%"> Konkretnost </th>
-                  <th width="20%"> Predočivost </th>
-                  <th width="20%"> Dob usvajanja </th>
-                  <th width="20%"> Subjektivna frekvencija </th>
-                </tr>
-              </thead>
-              <tbody>
-              {% for word in words %}
-                <tr>
-                  <td> {{ word.rijec }} </td>
-                  <td> {{ word.konkretnost_m }} </td>
-                  <td> {{ word.predocivost_m }} </td>
-                  <td> {{ word.dob_usvajanja_m }} </td>
-                  <td> {{ word.subj_frekvencija_m }} </td>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          <div style="text-align: center">
-        {% else %}
-          <div style="text-align: center">
-            <h3> Nema rezultata za zadanu pretragu. </h3>
-            <hr class="intro-divider">
-        {% endif %}
-        <a href="{{ url_for('home.homepage') }}" class="btn btn-default btn-lg">
+        <div style="text-align: center">
+          {% endif %}
+          <a href="{{ url_for('home.homepage') }}" class="btn btn-default btn-lg">
             <i class="fa fa-refresh"></i> 
             Nova pretraga
           </a>
         </div>
       </div>
-    </div>
-  </div>
 </div>
 {% endblock %}
