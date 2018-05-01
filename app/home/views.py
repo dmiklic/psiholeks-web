@@ -23,5 +23,8 @@ def show_results():
     """
     Show query results
     """
-    words = Word.query.filter_by(rijec=request.form.get('rijec')).all();
+    # TODO: Implement Post/Redirect/Get pattern
+    words = Word.query.filter_by(rijec=request.form.get('rijec')).all()
+    if not request.form.get('rijec'):
+        words = Word.query.all()
     return render_template('home/results.html', words=words, title="Rijeci")

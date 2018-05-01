@@ -6,3 +6,8 @@ instance
 
 # emacs droppings
 *~
+\#*\#
+.\#*
+
+# Libre office locks
+.~*\#
