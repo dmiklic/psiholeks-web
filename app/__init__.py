@@ -41,16 +41,18 @@ def create_app(config_name):
     # TODO: This  might not be the right place to do
     # initialization
     with app.app_context():
-        if db.engine.dialect.has_table(db.engine,'rjeci'):
-            # Remove old data
-            models.Word.query.delete()
-            db.session.commit()
+        # TODO: Check here if the table actually exists
+        # otherwise, problems appear on new deployments
+        # i.e., flask db * commands fail
+        # Remove old data
+        models.Word.query.delete()
+        db.session.commit()
     
-            # Populate the database from .csv
-            data = pd.read_csv('app/static/data/psiholeks.csv',
-                               delimiter=';',
-                               index_col='rijec')
-            data.to_sql('rijeci', db.engine, if_exists='append')
+        # Populate the database from .csv
+        data = pd.read_csv('app/static/data/psiholeks.csv',
+                           delimiter=';',
+                           index_col='rijec')
+        data.to_sql('rijeci', db.engine, if_exists='append')
         
     from .home import home as home_blueprint
     app.register_blueprint(home_blueprint)
