@@ -1,6 +1,6 @@
 # app/home/views.py
 
-from flask import render_template, url_for, redirect
+from flask import render_template, url_for, redirect, request, session
 
 from . import home
 from forms import QueryForm
@@ -14,14 +14,14 @@ def homepage():
     """
     form = QueryForm()
     if form.validate_on_submit():
-        return redirect(url_for('home.show_results'))
+        return redirect(url_for('home.show_results'), code=307)
 
     return render_template('home/index.html', form=form, title="Psiholeks")
 
-@home.route('/results')
+@home.route('/pretraga', methods=['POST'])
 def show_results():
     """
     Show query results
     """
-    words = Word.query.all();
+    words = Word.query.filter_by(rijec=request.form.get('rijec')).all();
     return render_template('home/results.html', words=words, title="Rijeci")
